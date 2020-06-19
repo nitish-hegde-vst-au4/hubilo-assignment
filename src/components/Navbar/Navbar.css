@@ -1,0 +1,15 @@
+.nav-items a {
+  text-decoration: none;
+}
+.nav-items li {
+  list-style: none;
+  display: inline-block;
+  padding: 0 10px;
+}
+.nav-items {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+nav {
+  margin: 20px 0;
+}

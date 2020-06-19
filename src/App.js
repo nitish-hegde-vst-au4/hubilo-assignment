@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import FormPage from './components/FormPage/FormPage';
+import ListPage from './components/ListPage/ListPage';
+import Navbar from './components/Navbar/Navbar';
+import Modal from './components/Modal/Modal';
+import Backdrop from './components/Backdrop/Backdrop';
+import FormContainer from './components/FormContainer/FormContainer';
+import { updateUser, editUser } from './redux/actions';
 
 function App() {
+  const userToEdit = useSelector((state) => state.userToEdit);
+  const dispatch = useDispatch();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Navbar />
+      {userToEdit ? (
+        <div className='modal-backdrop-container'>
+          <Modal
+            user={userToEdit}
+            action={updateUser}
+            component={FormContainer}
+          />
+          <Backdrop onClick={() => dispatch(editUser(null))} />
+        </div>
+      ) : null}
+
+      <Switch>
+        <Route exact path='/' component={FormPage} />
+        <Route path='/users-list' component={ListPage} />
+      </Switch>
+    </Fragment>
   );
 }
 
